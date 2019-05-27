@@ -221,6 +221,9 @@ static void tick()
     SDL_GL_SwapWindow(_mainWindow);
 }
 
+#ifdef __cplusplus
+ extern "C" {
+#endif
 int main(int argc, char *argv[])
 {
     _closeNextFrame = false;
@@ -234,4 +237,10 @@ int main(int argc, char *argv[])
     }
     close();
     sdl_audio_release(_render);
+
+	return 0;
 }
+
+#ifdef __cplusplus
+ }
+#endif

@@ -454,6 +454,7 @@ bool thread_sleep(uint32_t milliseconds)
 #else
     usleep((useconds_t)milliseconds*1000);
 #endif
+	return true;
 }
 
 uint64_t GetTime()

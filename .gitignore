@@ -4,3 +4,10 @@ minimp3_arm
 *.gcda
 *.gcno
 *.gcov
+player/SDL/
+player/.vs/
+player/Debug/
+*.sln
+*.vcxproj
+*.filters
+*.user

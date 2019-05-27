@@ -1,6 +1,6 @@
 #include <stddef.h>
 #include <stdlib.h>
-#include <sys/param.h>
+//#include <sys/param.h>
 #include <SDL2/SDL.h>
 #include <assert.h>
 #include <stdio.h>

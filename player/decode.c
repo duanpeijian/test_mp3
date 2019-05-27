@@ -1,10 +1,10 @@
 #include <stdio.h>
 #include <string.h>
 #include <errno.h>
-#include <sys/mman.h>
+//#include <sys/mman.h>
 #include <sys/types.h>
 #include <sys/stat.h>
-#include <unistd.h>
+//#include <unistd.h>
 #include <fcntl.h>
 #include <stdlib.h>
 #include <math.h>
@@ -107,11 +107,12 @@ retry_open:
 
     dec->mp3_size = st.st_size;
 retry_mmap:
-    dec->mp3_buf = mmap(NULL, st.st_size, PROT_READ, MAP_PRIVATE | MAP_POPULATE, dec->file, 0);
-    if (MAP_FAILED == dec->mp3_buf && (errno == EAGAIN || errno == EINTR))
-        goto retry_mmap;
-    if (MAP_FAILED == dec->mp3_buf)
+	dec->mp3_buf = malloc(st.st_size);
+	FILE* file = fopen(file_name, "rb");
+	int readSize = fread(dec->mp3_buf, 1, st.st_size, file);
+    if (readSize != st.st_size)
     {
+		free(dec->mp3_buf);
         close_dec(dec);
         return 0;
     }
@@ -123,8 +124,6 @@ int close_dec(decoder *dec)
 {
     if (dec->mp3_buf)
         free(dec->mp3_buf);
-    if (dec->mp3_buf && MAP_FAILED != dec->mp3_buf)
-        munmap(dec->mp3_buf, dec->mp3_size);
     if (dec->file)
         close(dec->file);
     memset(dec, 0, sizeof(*dec));
